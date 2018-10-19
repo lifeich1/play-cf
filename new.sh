@@ -3,8 +3,9 @@
 code=$1
 name=$2
 
-if [ -z "$1$2" ]; then
+if [ -z "$1" -o -z "$2" ]; then
     echo "lack of argument"
+    exit 1
 fi
 
 dir=./src/$code

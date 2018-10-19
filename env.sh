@@ -56,7 +56,11 @@ runtest() {
     if [ -d `cfworkdir` ]; then
         test -z $TMPDIR && TMPDIR='.'
         echo '/*=== compiling ===*/'
-        g++ -I `cfworkdir` `cfworkdir`/*.cc `cfworkdir`/*.cpp -Wall \
+        g++ -I `cfworkdir` \
+            `cfworkdir`/*.cc \
+            `cfworkdir`/*.cpp \
+            -Wall \
+            -std=c++11 \
             -o $TMPDIR/a.out
         echo '/*=== running ===*/'
         $TMPDIR/a.out
