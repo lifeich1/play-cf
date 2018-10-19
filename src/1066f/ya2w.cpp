@@ -1,5 +1,6 @@
 //-[
 #include "type.h"
+#include <cstdio>
 //-]
 
 #include <algorithm>
@@ -43,13 +44,12 @@ int ya2w_1066f(const _1066f_ya2w_in_t & in_, _1066f_ya2w_out_t & out_)
     {
         while (rt < n && ps[lf].u() == ps[rt].u()) ++ rt;
 
-        int tmp, l;
-        _int64 f1[2];
+        _int64 tmp, l, f1[2];
         l = dist(ps[lf], ps[rt - 1]);
 
-        f1[0] = f[0] + dist(lo, ps[rt]) + l;
+        f1[0] = f[0] + dist(lo, ps[rt - 1]) + l;
         f1[1] = f[1] + dist(hi, ps[lf]) + l;
-        tmp = f[1] + dist(hi, ps[rt]) + l;
+        tmp = f[1] + dist(hi, ps[rt - 1]) + l;
         if (tmp < f1[0]) f1[0] = tmp;
         tmp = f[0] + dist(lo, ps[lf]) + l;
         if (tmp < f1[1]) f1[1] = tmp;

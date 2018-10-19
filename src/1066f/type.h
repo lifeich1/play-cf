@@ -7,8 +7,8 @@ namespace ya2w_1066f {
         int x, y;
         point(): point(0, 0) {}
         point(int x_, int y_): x(x_), y(y_) {}
-        int u() const { return x + y; }
-        int v() const { return x - y; }
+        int u() const { return x > y ? x : y; }
+        int v() const { return y <= x ? y : y - x + y; }
     };
 
     bool operator< (const point & lhs, const point & rhs);
