@@ -22,6 +22,12 @@ new_type_h() {
 #ifndef $tmacro
 #define $tmacro
 
+namespace licf {
+namespace $tfunc {
+    // placeholder
+}
+}
+
 struct $tin {
     int __padding;
 };
@@ -47,11 +53,21 @@ new_algo_cpp() {
 #include "type.h"
 //-]
 
+
+namespace licf {
+namespace $tfunc {
+    // placeholder
+}
+}
+
+using namespace licf::$tfunc;
+
 int $tfunc(const $tin & in_, $tout & out_)
 {
     // placeholder
     return 0;
 }
+
 END
 }
 
@@ -103,11 +119,17 @@ else
     oout="${obase}_out_t"
     ofunc="${oname}_${code}"
 
-    sed -i "" -e "s/${obase}/${tbase}/" type.h
-    sed -i "" -e "s/${ofunc}/${tfunc}/" type.h
-    sed -i "" -e "s/${obase}/${tbase}/" _io.cc
-    sed -i "" -e "s/${ofunc}/${tfunc}/" _io.cc
-    sed -i "" -e "s/${obase}/${tbase}/" ${oname}.cpp
-    sed -i "" -e "s/${ofunc}/${tfunc}/" ${oname}.cpp
+    if [ `uname` = Darwin ]; then
+        msedcmd="sed -i '' -e"
+    else
+        msedcmd='sed -i -e'
+    fi
+
+    $msedcmd "s/${obase}/${tbase}/g" type.h
+    $msedcmd "s/${ofunc}/${tfunc}/g" type.h
+    $msedcmd "s/${obase}/${tbase}/g" _io.cc
+    $msedcmd "s/${ofunc}/${tfunc}/g" _io.cc
+    $msedcmd "s/${obase}/${tbase}/g" ${oname}.cpp
+    $msedcmd "s/${ofunc}/${tfunc}/g" ${oname}.cpp
     mv ${oname}.cpp ${name}.cpp
 fi
