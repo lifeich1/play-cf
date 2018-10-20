@@ -79,5 +79,10 @@ pcode() {
 }
 
 cpcode() {
-    pcode | pbcopy && echo 'copied.'
+    if [ `uname` = Darwin ]; then
+        pbcopy=pbcopy
+    else
+        pbcopy='xsel -b'
+    fi
+    pcode | $pbcopy && echo 'copied.'
 }

@@ -12,5 +12,5 @@ fi
 DIR=./src/$1
 
 cat $DIR/type.h
-find $DIR -name "*.cpp" -exec sed '/^\/\/-\[/,/^\/\/-\]/d' {} \;
+find $DIR -name "*.cpp" -exec sed -e '/^ *\/\/-\[/,/^ *\/\/-\]/d' {} \;
 sed "1d" $DIR/_io.cc
