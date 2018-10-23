@@ -61,7 +61,7 @@ runtest() {
             `cfworkdir`/*.cpp \
             -Wall \
             -std=c++11 \
-            -o $TMPDIR/a.out
+            -o $TMPDIR/a.out || return 1
         echo '/*=== running ===*/'
         $TMPDIR/a.out
     else
