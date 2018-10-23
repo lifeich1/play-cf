@@ -22,8 +22,14 @@ new_type_h() {
 #ifndef $tmacro
 #define $tmacro
 
+struct $tin;
+struct $tout;
+
 namespace licf {
 namespace $tfunc {
+    typedef struct $tin _in_t;
+    typedef struct $tout _out_t;
+
     // placeholder
 }
 }
@@ -62,7 +68,7 @@ namespace $tfunc {
 
 using namespace licf::$tfunc;
 
-int $tfunc(const $tin & in_, $tout & out_)
+int $tfunc(const _in_t & in_, _out_t & out_)
 {
     // placeholder
     return 0;
