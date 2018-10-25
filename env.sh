@@ -37,7 +37,7 @@ newproblem() {
 
 editall() {
     dir=`cfworkdir`
-    vim $dir/_io.cc $dir/type.h $dir/*.cpp
+    vim -p $dir/_io.cc $dir/type.h $dir/*.cpp
 }
 
 editmain() {
