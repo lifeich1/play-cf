@@ -1,10 +1,10 @@
 #!/bin/bash
 
-export CFHOME=`pwd -P`
+export CFHOME="`pwd -P`"
 if [ -z $CFCODE ]; then
     _OLD_PROG_CF_PS1_=''
 fi
-NEW=$CFHOME/new.sh
+NEW="$CFHOME/new.sh"
 PRINT="$CFHOME/print.sh"
 
 cfworkdir() {
@@ -24,29 +24,29 @@ uptop() {
 }
 
 atproblem() {
-    export CFCODE=$1
+    export CFCODE="$1"
     if ! [ -z $_OLD_PROG_CF_PS1_ ]; then
-        export PS1=$_OLD_PROG_CF_PS1_
+        export PS1="$_OLD_PROG_CF_PS1_"
         _OLD_PROG_CF_PS1_=''
     fi
     if ! [ -z $1 ]; then
-        _OLD_PROG_CF_PS1_=$PS1
+        _OLD_PROG_CF_PS1_="$PS1"
         export PS1="[$1] $PS1"
     fi
 }
 
 newproblem() {
-    tmp=$OLDPWD
-    olddir=`pwd`
+    tmp="$OLDPWD"
+    olddir="`pwd`"
     uptop
     $NEW $1 $2 && atproblem $1
     cd $olddir
-    export OLDPWD=$tmp
+    export OLDPWD="$tmp"
 }
 
 
 editall() {
-    dir=`cfworkdir`
+    dir="`cfworkdir`"
     vim -p $dir/_io.cc $dir/type.h $dir/*.cpp
 }
 
@@ -80,12 +80,12 @@ runtest() {
 }
 
 pcode() {
-    tmp=$OLDPWD
-    olddir=`pwd`
+    tmp="$OLDPWD"
+    olddir="`pwd`"
     uptop
     $PRINT $CFCODE
     cd $olddir
-    export OLDPWD=$tmp
+    export OLDPWD="$tmp"
 }
 
 cpcode() {
