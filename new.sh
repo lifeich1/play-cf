@@ -29,6 +29,7 @@ namespace licf {
 namespace $tfunc {
     typedef struct $tin _in_t;
     typedef struct $tout _out_t;
+    typedef struct $tout _data_t;
 
     // placeholder
 }
@@ -39,7 +40,9 @@ struct $tin {
 };
 
 struct $tout {
-    int __padding;
+    const struct $tin * in_;
+
+    // placeholder
 };
 
 typedef struct $tin $tin;
@@ -85,7 +88,7 @@ new_io_cc() {
 using namespace std;
 
 $tin in_;
-$tout out_;
+$tout out_ = {&in_};
 
 void _get_input()
 {
