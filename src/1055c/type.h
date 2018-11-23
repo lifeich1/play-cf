@@ -11,6 +11,7 @@ namespace lucd_1055c {
     typedef struct _1055c_lucd_out_t _data_t;
 
     int gcd(int, int);
+    int interval(int, int, int, int);
 }
 }
 
