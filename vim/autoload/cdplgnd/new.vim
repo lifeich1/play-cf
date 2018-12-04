@@ -37,10 +37,10 @@ function! cdplgnd#new#Edit() abort
         return
     endif
     call cdplgnd#new#Clear()
-    edit glob(l:path . '/*.cpp')[0]
-    botright vsplit l:path . "/type.h"
-    botright split l:path . "/_io.cc"
-    execute 1wincmd w
+    execute "edit " . glob(l:path . '/*.cpp')[0]
+    execute "botright vsplit " . l:path . "/type.h"
+    execute "botright split " . l:path . "/_io.cc"
+    execute "1wincmd w"
 endfunction
 
 function! cdplgnd#new#Clear() abort
