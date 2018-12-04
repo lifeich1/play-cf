@@ -4,16 +4,16 @@
 
 let s:ctx_flag = 0
 
-function! cdplgnd#ctx#enable() abort
+function! cdplgnd#ctx#Enable() abort
     let s:ctx_flag = 1
 
     " set mapping
-    nnoremap <leader>pr :call cdplgnd#new#newOrRename()<cr>
-    nnoremap <leader>pe :call cdplgnd#new#edit()<cr>
-    nnoremap <leader>pc :call cdplgnd#new#clear()<cr>
+    nnoremap <leader>pr :call cdplgnd#new#NewOrRename()<cr>
+    nnoremap <leader>pe :call cdplgnd#new#Edit()<cr>
+    nnoremap <leader>pc :call cdplgnd#new#Clear()<cr>
 endfunction
 
-function! cdplgnd#ctx#disable() abort
+function! cdplgnd#ctx#Disable() abort
     let s:ctx_flag = 0
 
     " clear mapping
@@ -22,10 +22,10 @@ function! cdplgnd#ctx#disable() abort
     nunmap <leader>pc
 endfunction
 
-function! cdplgnd#ctx#toggle() abort
+function! cdplgnd#ctx#Toggle() abort
     if s:ctx_flag
-        cdplgnd#ctx#disable()
+        call cdplgnd#ctx#Disable()
     else
-        cdplgnd#ctx#enable
+        call cdplgnd#ctx#Enable()
     endif
 endfunction

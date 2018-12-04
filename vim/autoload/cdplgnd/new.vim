@@ -4,16 +4,16 @@
 
 let s:cur_file = expand("<sfile>")
 
-function! cdplgnd#new#new(code, name) abort
+function! cdplgnd#new#New(code, name) abort
     let l:root_dir = fnamemodify(s:cur_file, ':h:h:h')
 endfunction
 
-function! cdplgnd#new#rename(code, name) abort
+function! cdplgnd#new#Rename(code, name) abort
     "
 endfunction
 
 
-function! cdplgnd#new#newOrRename() abort
+function! cdplgnd#new#NewOrRename() abort
     let l:code = input("input problem code: ")
     if strlen(l:code) ==# 0
         echom "Require problem code!"
@@ -22,27 +22,27 @@ function! cdplgnd#new#newOrRename() abort
     let l:name = input("input algo name(default 'main'): ", "main")
     let l:path = './src/' . l:code
     if isdirectory(l:path)
-        cdplgnd#new#rename(l:code, l:name)
+        call cdplgnd#new#Rename(l:code, l:name)
     else
-        mkdir(l:path, "p")
-        cdplgnd#new#new(l:code, l:name)
+        call mkdir(l:path, "p")
+        call cdplgnd#new#New(l:code, l:name)
     endif
 endfunction
 
-function! cdplgnd#new#edit() abort
+function! cdplgnd#new#Edit() abort
     let l:code = input("input problem code: ")
     let l:path = "./src/" . l:code 
     if !isdirectory(l:path)
         echom "File not found!"
         return
     endif
-    cdplgnd#new#clear()
+    call cdplgnd#new#Clear()
     edit glob(l:path . '/*.cpp')[0]
     botright vsplit l:path . "/type.h"
     botright split l:path . "/_io.cc"
     execute 1wincmd w
 endfunction
 
-function! cdplgnd#new#clear() abort
+function! cdplgnd#new#Clear() abort
     bdelete %
 endfunction

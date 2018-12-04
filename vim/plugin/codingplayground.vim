@@ -4,13 +4,13 @@
 " autoload directory: cdplgnd
 
 function! g:CodePlayGroundOn()
-    call cdplgnd#ctx#enable()
+    call cdplgnd#ctx#Enable()
 endfunction
 
 function! g:CodePlayGroundOff()
-    call cdplgnd#ctx#disable()
+    call cdplgnd#ctx#Disable()
 endfunction
 
 function! g:CodePlayGroundToggle()
-    call cdplgnd#ctx#toggle()
+    call cdplgnd#ctx#Toggle()
 endfunction
