@@ -9,8 +9,10 @@ function! cdplgnd#ctx#Enable() abort
 
     " set mapping
     nnoremap <leader>pr :call cdplgnd#new#NewOrRename()<cr>
-    nnoremap <leader>pe :call cdplgnd#new#Edit()<cr>
+    nnoremap <leader>pe :call cdplgnd#new#TryEdit()<cr>
     nnoremap <leader>pc :call cdplgnd#new#Clear()<cr>
+
+    echom "Enable code playground, welcome!"
 endfunction
 
 function! cdplgnd#ctx#Disable() abort
@@ -20,6 +22,8 @@ function! cdplgnd#ctx#Disable() abort
     nunmap <leader>pr
     nunmap <leader>pe
     nunmap <leader>pc
+
+    echom "Disabled playground"
 endfunction
 
 function! cdplgnd#ctx#Toggle() abort
