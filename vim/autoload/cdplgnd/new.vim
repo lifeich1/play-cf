@@ -37,10 +37,22 @@ function! cdplgnd#new#Edit() abort
         return
     endif
     call cdplgnd#new#Clear()
-    execute "edit " . l:path . "/_io.cc"
-    execute "topleft split " . l:path . "/type.h"
-    execute "topleft vsplit " . glob(l:path . '/*.cpp', 0, 1)[0]
-    execute "1wincmd w"
+    let l:layout = cdplgnd#config#EditLayout()
+    let l:fio = l:path . "/_io.cc"
+    let l:fty = l:path . "/type.h"
+    let l:alg = glob(l:path . '/*.cpp', 0, 1)[0]
+    if l:layout ==? "tabs"
+        execute "tabedit " . l:fio
+        execute "tabonly"
+        execute "tabedit " . l:fty
+        execute "tabedit " . l:alg
+        execute "1tabnext"
+    else " 'split12'
+        execute "edit " . l:fio
+        execute "topleft split " . l:fty 
+        execute "topleft vsplit " . l:alg
+        execute "1wincmd w"
+    endif
 endfunction
 
 function! cdplgnd#new#Clear() abort
