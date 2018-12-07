@@ -39,7 +39,41 @@ function! cdplgnd#new#New(code, name) abort
 endfunction
 
 function! cdplgnd#new#Rename(code, name) abort
-    " rename TODO
+    let l:path = "./src/" . a:code . "/"
+    let l:fio = l:path . "_io.cc"
+    let l:fty = l:path . "type.h"
+    let l:alg = glob(l:path . '*.cpp', 0, 1)[0]
+
+    let l:oname = l:alg[strlen(l:path):-5]
+    let l:obase = "_" . a:code . "_" . l:oname
+    let l:omacro = l:obase . "_H_INCLUDE"
+    let l:oin = l:obase . "_in_t"
+    let l:oout = l:obase . "_out_t"
+    let l:ofunc = l:oname . "_" . a:code
+
+    let l:tbase = "_" . a:code . "_" . a:name
+    let l:tmacro = l:tbase . "_H_INCLUDE"
+    let l:tin = l:tbase . "_in_t"
+    let l:tout = l:tbase . "_out_t"
+    let l:tfunc = a:name . "_" . a:code
+    let l:_vars = ["base", "macro", "in", "out", "func"]
+
+    for l:file in [l:fio, l:fty, l:alg]
+        let l:contents = readfile(l:file)
+        let l:buf = []
+        for line in l:contents
+            let l:tmp = line
+            for va in l:_vars
+                "echom get(l:, "o".va) . " " . get(l:, "t".va)
+                let l:tmp = substitute(l:tmp, get(l:, "o".va),
+                            \ get(l:, "t".va), "g")
+            endfor
+            call add(l:buf, l:tmp)
+        endfor
+        call writefile(l:buf, l:file)
+    endfor
+
+    call rename(l:alg, l:path . a:name . ".cpp")
 
     call cdplgnd#new#Edit(a:code)
 endfunction
@@ -47,7 +81,7 @@ endfunction
 
 function! cdplgnd#new#NewOrRename() abort
     let l:code = input("input problem code: ")
-    if strlen(l:code) ==# 0
+    if match(l:code, '^\w\+$') !=# 0
         echom "Require problem code!"
         return
     endif
@@ -55,9 +89,9 @@ function! cdplgnd#new#NewOrRename() abort
     if strlen(l:name) ==# 0
         let l:name = "main"
     endif
-    if match(l:name, '^\a')
+    if match(l:name, '^\h\w*$') !=# 0
         echo " "
-        echom "Error! Name must start with alphabetic"
+        echom "Invalid name"
         return
     endif
     let l:path = './src/' . l:code
