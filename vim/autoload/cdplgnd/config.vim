@@ -18,3 +18,13 @@ endfunction
 function! cdplgnd#config#TemplateAlgoFile()
     return get(g:, "CodePlayground_TemplateAlgoFile", "codeplay_3algo.cpp")
 endfunction
+
+let s:gcodevar = "#"
+
+function! cdplgnd#config#Current()
+    return s:gcodevar
+endfunction
+
+function! cdplgnd#config#SetCurr(code)
+    let s:gcodevar = a:code
+endfunction

@@ -1,6 +1,7 @@
 " vim: set sw=2 ts=2 et
 "
 " author: lifeich1
+" email: lifeich0@gmail.com 
 
 let s:cur_file = expand("<sfile>")
 
@@ -94,6 +95,7 @@ function! cdplgnd#new#NewOrRename() abort
         echom "Invalid name"
         return
     endif
+    call cdplgnd#new#Clear()
     let l:path = './src/' . l:code
     if isdirectory(l:path)
         call cdplgnd#new#Rename(l:code, l:name)
@@ -109,7 +111,6 @@ function! cdplgnd#new#Edit(code) abort
         echom "File not found!"
         return
     endif
-    call cdplgnd#new#Clear()
     let l:layout = cdplgnd#config#EditLayout()
     let l:fio = l:path . "/_io.cc"
     let l:fty = l:path . "/type.h"
@@ -126,10 +127,12 @@ function! cdplgnd#new#Edit(code) abort
         execute "topleft vsplit " . l:alg
         execute "1wincmd w"
     endif
+    call cdplgnd#config#SetCurr(a:code)
 endfunction
 
 function! cdplgnd#new#TryEdit() abort
     let l:code = input("input problem code: ")
+    call cdplgnd#new#Clear()
     call cdplgnd#new#Edit(l:code)
 endfunction
 
