@@ -14,3 +14,5 @@ endfunction
 function! g:CodePlayGroundToggle()
     call cdplgnd#ctx#Toggle()
 endfunction
+
+command! CodePlayPreview call cdplgnd#text#BrowseText()

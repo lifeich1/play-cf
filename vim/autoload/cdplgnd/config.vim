@@ -28,3 +28,7 @@ endfunction
 function! cdplgnd#config#SetCurr(code)
     let s:gcodevar = a:code
 endfunction
+
+function! cdplgnd#config#IsWorking()
+    return cdplgnd#config#Current() !=# "#"
+endfunction

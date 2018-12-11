@@ -1,9 +1,26 @@
-" vim: set sw=2 ts=2 et
+" vim: set sw=2 ts=2 et foldmethod=marker
 "
 " author: lifeich1
 " email: lifeich0@gmail.com 
 
 let s:cur_file = expand("<sfile>")
+
+" Relate to directory tree structure --- {{{
+function! cdplgnd#new#GetDirectory(code) abort
+    return "./src/" . a:code . "/"
+endfunction
+
+function! cdplgnd#new#GetPath(code, name) abort
+    let l:path = cdplgnd#new#GetDirectory(a:code)
+    return [l:path . "_io.cc", l:path . "type.h", l:path . a:name . ".cpp"]
+endfunction
+
+function!cdplgnd#new#FindPath(code) abort
+    let l:paths = cdplgnd#new#GetPath(a:code, "*")
+    let l:paths[-1] = glob(l:paths[-1], 0, 1)[0]
+    return l:paths
+endfunction
+" }}}
 
 function! cdplgnd#new#New(code, name) abort
     let l:root_dir = fnamemodify(s:cur_file, ':h:h:h')
@@ -20,8 +37,7 @@ function! cdplgnd#new#New(code, name) abort
     let l:tfunc = a:name . "_" . a:code
     let l:tvars = ["tbase", "tmacro", "tin", "tout", "tfunc"]
 
-    let l:dst = "./src/" . a:code . "/"
-    let l:dfs = ["_io.cc", "type.h", a:name . ".cpp"]
+    let l:dst = cdplgnd#new#GetPath(a:code, a:name)
 
     for it in range(3)
         let l:contents = readfile(l:ins[it])
@@ -33,19 +49,19 @@ function! cdplgnd#new#New(code, name) abort
             endfor
             call add(l:output, l:tmp)
         endfor
-        call writefile(l:output, l:dst . l:dfs[it])
+        call writefile(l:output, l:dst[it])
     endfor
 
     call cdplgnd#new#Edit(a:code)
 endfunction
 
 function! cdplgnd#new#Rename(code, name) abort
-    let l:path = "./src/" . a:code . "/"
-    let l:fio = l:path . "_io.cc"
-    let l:fty = l:path . "type.h"
-    let l:alg = glob(l:path . '*.cpp', 0, 1)[0]
+    let l:t_path = cdplgnd#new#FindPath(a:code)
+    let l:fio = l:t_path[0]
+    let l:fty = l:t_path[1]
+    let l:alg = l:t_path[2]
 
-    let l:oname = l:alg[strlen(l:path):-5]
+    let l:oname = fnamemodify(l:alg, ":t:r")
     let l:obase = "_" . a:code . "_" . l:oname
     let l:omacro = l:obase . "_H_INCLUDE"
     let l:oin = l:obase . "_in_t"
@@ -74,6 +90,7 @@ function! cdplgnd#new#Rename(code, name) abort
         call writefile(l:buf, l:file)
     endfor
 
+    let l:path = cdplgnd#new#GetDirectory(a:code)
     call rename(l:alg, l:path . a:name . ".cpp")
 
     call cdplgnd#new#Edit(a:code)
@@ -106,15 +123,16 @@ function! cdplgnd#new#NewOrRename() abort
 endfunction
 
 function! cdplgnd#new#Edit(code) abort
-    let l:path = "./src/" . a:code 
+    let l:path = cdplgnd#new#GetDirectory(a:code)
     if !isdirectory(l:path)
         echom "File not found!"
         return
     endif
     let l:layout = cdplgnd#config#EditLayout()
-    let l:fio = l:path . "/_io.cc"
-    let l:fty = l:path . "/type.h"
-    let l:alg = glob(l:path . '/*.cpp', 0, 1)[0]
+    let l:t_path = cdplgnd#new#FindPath(a:code)
+    let l:fio = l:t_path[0]
+    let l:fty = l:t_path[1]
+    let l:alg = l:t_path[2]
     if l:layout ==? "tabs"
         execute "tabedit " . l:fio
         execute "tabonly"

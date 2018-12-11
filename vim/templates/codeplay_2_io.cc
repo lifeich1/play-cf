@@ -1,4 +1,6 @@
+//-[
 #include "type.h"
+//-]
 #include <cstdio>
 
 using namespace std;
