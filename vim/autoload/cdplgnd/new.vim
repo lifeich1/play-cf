@@ -1,4 +1,4 @@
-" vim: set sw=2 ts=2 et foldmethod=marker
+" vim: set et foldmethod=marker
 "
 " author: lifeich1
 " email: lifeich0@gmail.com 

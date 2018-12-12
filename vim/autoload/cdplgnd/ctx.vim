@@ -1,4 +1,4 @@
-" vim: set sw=2 ts=2 et
+" vim: et
 "
 " author: lifeich1
 
@@ -30,6 +30,12 @@ function! cdplgnd#ctx#Toggle() abort
     if s:ctx_flag
         call cdplgnd#ctx#Disable()
     else
+        call cdplgnd#ctx#Enable()
+    endif
+endfunction
+
+function! cdplgnd#ctx#ReInit() abort
+    if s:ctx_flag
         call cdplgnd#ctx#Enable()
     endif
 endfunction
