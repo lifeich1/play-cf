@@ -1,5 +1,4 @@
 " vim: set et
-:qa
 "
 " author: lifeich1
 " email: lifeich0@gmail.com 
@@ -40,7 +39,7 @@ endfunction
 
 function! cdplgnd#text#BrowseText() abort
     if cdplgnd#config#IsWorking()
-        tabnew
+        tabnew __Print__
         setlocal buftype=nofile
         call append(0, cdplgnd#text#GetText())
         setlocal readonly
