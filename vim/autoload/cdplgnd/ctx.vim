@@ -27,6 +27,9 @@ function! cdplgnd#ctx#Enable() abort
 endfunction
 
 function! cdplgnd#ctx#Disable() abort
+    if s:ctx_flag ==# 0
+        return
+    endif
     let s:ctx_flag = 0
 
     " clear mapping

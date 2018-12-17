@@ -3,17 +3,9 @@
 " author: lifeich1
 " autoload directory: cdplgnd
 
-function! g:CodePlayGroundOn()
-    call cdplgnd#ctx#Enable()
-endfunction
-
-function! g:CodePlayGroundOff()
-    call cdplgnd#ctx#Disable()
-endfunction
-
-function! g:CodePlayGroundToggle()
-    call cdplgnd#ctx#Toggle()
-endfunction
+command! CodePlayGroundOn call cdplgnd#ctx#Enable()
+command! CodePlayGroundOff call cdplgnd#ctx#Disable()
+command! CodePlayGroundToggle call cdplgnd#ctx#Toggle()
 
 command! CodePlayPreview call cdplgnd#text#BrowseText()
 
