@@ -23,6 +23,8 @@ endfunction
 " }}}
 
 function! cdplgnd#new#New(code, name) abort
+" create new problem --- {{{
+    " filenames and symbols ---- {{{
     let l:root_dir = fnamemodify(s:cur_file, ':h:h:h')
     let l:template = l:root_dir . "/templates/"
     let l:qio = l:template . cdplgnd#config#TemplateIOFile()
@@ -38,7 +40,9 @@ function! cdplgnd#new#New(code, name) abort
     let l:tvars = ["tbase", "tmacro", "tin", "tout", "tfunc"]
 
     let l:dst = cdplgnd#new#GetPath(a:code, a:name)
+    " }}}
 
+    " auto fill templates ---- {{{
     for it in range(3)
         let l:contents = readfile(l:ins[it])
         let l:output = []
@@ -51,11 +55,15 @@ function! cdplgnd#new#New(code, name) abort
         endfor
         call writefile(l:output, l:dst[it])
     endfor
+    " }}}
 
     call cdplgnd#new#Edit(a:code)
 endfunction
+" }}}
 
 function! cdplgnd#new#Rename(code, name) abort
+" rename problem's algo --- {{{
+    " prepare symbols ---- {{{
     let l:t_path = cdplgnd#new#FindPath(a:code)
     let l:fio = l:t_path[0]
     let l:fty = l:t_path[1]
@@ -74,7 +82,9 @@ function! cdplgnd#new#Rename(code, name) abort
     let l:tout = l:tbase . "_out_t"
     let l:tfunc = a:name . "_" . a:code
     let l:_vars = ["base", "macro", "in", "out", "func"]
+    " }}}
 
+    " inflate rename symbols ---- {{{
     for l:file in [l:fio, l:fty, l:alg]
         let l:contents = readfile(l:file)
         let l:buf = []
@@ -89,15 +99,18 @@ function! cdplgnd#new#Rename(code, name) abort
         endfor
         call writefile(l:buf, l:file)
     endfor
+    " }}}
 
     let l:path = cdplgnd#new#GetDirectory(a:code)
     call rename(l:alg, l:path . a:name . ".cpp")
 
     call cdplgnd#new#Edit(a:code)
 endfunction
+" }}}
 
 
 function! cdplgnd#new#NewOrRename() abort
+" try create new files or rename old files --- {{{
     let l:code = input("input problem code: ")
     if match(l:code, '^\w\+$') !=# 0
         echom "Require problem code!"
@@ -121,8 +134,10 @@ function! cdplgnd#new#NewOrRename() abort
         call cdplgnd#new#New(l:code, l:name)
     endif
 endfunction
+" }}}
 
 function! cdplgnd#new#Edit(code) abort
+" open editing windows --- {{{
     let l:path = cdplgnd#new#GetDirectory(a:code)
     if !isdirectory(l:path)
         echom "File not found!"
@@ -147,13 +162,18 @@ function! cdplgnd#new#Edit(code) abort
     endif
     call cdplgnd#config#SetCurr(a:code)
 endfunction
+" }}}
 
 function! cdplgnd#new#TryEdit() abort
+" try edit --- {{{
     let l:code = input("input problem code: ")
     call cdplgnd#new#Clear()
     call cdplgnd#new#Edit(l:code)
 endfunction
+" }}}
 
 function! cdplgnd#new#Clear() abort
+" try close buffers --- {{{
     execute '%bdelete'
 endfunction
+" }}}
