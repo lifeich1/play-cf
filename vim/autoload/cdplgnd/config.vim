@@ -32,7 +32,10 @@ endfunction
 
 function! cdplgnd#config#SetCurr(code)
     let s:gcodevar = a:code
-    call mkdir(fnamemodify(s:code_mk, ":h"), "p")
+    let l:bdir = fnamemodify(s:code_mk, ":h")
+    if !isdirectory(l:bdir)
+        call mkdir(l:bdir, "p")
+    endif
     call writefile(["CODE := " . a:code, ""], s:code_mk)
 endfunction
 

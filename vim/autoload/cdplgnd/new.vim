@@ -91,7 +91,6 @@ function! cdplgnd#new#Rename(code, name) abort
         for line in l:contents
             let l:tmp = line
             for va in l:_vars
-                "echom get(l:, "o".va) . " " . get(l:, "t".va)
                 let l:tmp = substitute(l:tmp, get(l:, "o".va),
                             \ get(l:, "t".va), "g")
             endfor
@@ -140,6 +139,7 @@ function! cdplgnd#new#Edit(code) abort
 " open editing windows --- {{{
     let l:path = cdplgnd#new#GetDirectory(a:code)
     if !isdirectory(l:path)
+        echo " "
         echom "File not found!"
         return
     endif
