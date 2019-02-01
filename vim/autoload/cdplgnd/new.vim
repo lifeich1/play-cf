@@ -166,7 +166,16 @@ endfunction
 
 function! cdplgnd#new#TryEdit() abort
 " try edit --- {{{
-    let l:code = input("input problem code: ")
+    let l:default_code = cdplgnd#config#Current()
+    if l:default_code ==# "#"
+        let l:code = input("input problem code: ")
+    else
+        let l:code = input("input problem code (default '" .
+                    \ l:default_code . "'): ")
+        if strlen(l:code) ==# 0
+            let l:code = l:default_code
+        endif
+    endif
     call cdplgnd#new#Clear()
     call cdplgnd#new#Edit(l:code)
 endfunction
