@@ -30,6 +30,7 @@ function! cdplgnd#ctx#Enable() abort
     nnoremap <leader>pr :call cdplgnd#new#NewOrRename()<cr>
     nnoremap <leader>pe :call cdplgnd#new#TryEdit()<cr>
     nnoremap <leader>pc :call cdplgnd#new#Clear()<cr>
+    nnoremap <leader>pp :call cdplgnd#text#BrowseText()<cr>
 
     " set makeprg
     call cdplgnd#ctx#EnableMakeEnv()
@@ -50,6 +51,7 @@ function! cdplgnd#ctx#Disable() abort
     nunmap <leader>pr
     nunmap <leader>pe
     nunmap <leader>pc
+    nunmap <leader>pp
 
     echom "Disabled playground"
 endfunction
