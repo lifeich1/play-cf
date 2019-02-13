@@ -3,6 +3,10 @@
 " author: lifeich1
 " email: lifeich0@gmail.com 
 
+function! cdplgnd#config#YankKey()
+    return get(g:, "CodePlayground_YankKey", ":%y +<cr>")
+endfunction
+
 function! cdplgnd#config#EditLayout()
     return get(g:, "CodePlayground_EditLayout", "split12")
 endfunction

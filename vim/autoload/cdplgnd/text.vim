@@ -44,7 +44,13 @@ function! cdplgnd#text#BrowseText() abort
         call append(0, cdplgnd#text#GetText())
         setlocal readonly
         setlocal filetype=cpp
+        setlocal nomodifiable
         normal gg
+        nnoremap <script> <silent> <buffer> q :q<cr>:echo "quited"<cr>
+        nnoremap <script> <silent> <buffer> h
+                    \ :echo "'q' for quit, 'y' for yankall"<cr>
+        let l:ykey = cdplgnd#config#YankKey()
+        execute "nnoremap <script> <silent> <buffer> y " . l:ykey
     else
         echom "Currently NOT at ANY problem."
     endif
