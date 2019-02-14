@@ -9,9 +9,55 @@ Version:        0.0
 Contents                                            *cfplay* *cfplay-contents*
 
         1. Intro .............................. |cfplay-intro|
+        2. Commands ........................... |cfplay-cmd|
+        3. Variables .......................... |cfplay-var|
+        4. Structure .......................... |cfplay-struct|
 ==============================================================================
 1. Intro                                                        *cfplay-intro*
 
 Cfplay is a personal coding tool for arena.
+
+
+First, begin with low-level function. Create or rename exists coding problem,
+use command |CfplayNewOrRenProb|. Open a problem using command |CfplayEdit|.
+Clear buffers (all saved) using command |CfplayClear|, but maybe enter `:%bd!`
+to force clear all buffers. When extracting one single synthesis file, enter
+command |CfplayPreview|, which open a tab with output text.
+
+In creating problem, |cfplay| use 3 template files. It is able to customize
+using variables |g:Cfplay_TemplateIOFile|, |g:Cfplay_TemplateTypeHeader|,
+|g:Cfplay_TemplateAlgoFile|, to point out where new templates are.
+
+After problem being created, or it already exists, the editing begin. Coding
+layout can be configured with |g:Cfplay_EditLayout|.
+
+In synthesis file preview, some local mapping is set for convenience. Type 'h'
+to show help message, 'q' for quit, 'y' for yank all content. Assign raw yank
+operation sequence to |g:Cfplay_YankKey| for fix yank action in different os.
+
+
+In higher level, with more function available, using |CfplayOn| to turn on
+full environment, |CfplayOff| to turn off, |CfplayToggle| to toggle.
+
+When environment setup, 'makeprg' is set. Enter `:make` compile only.
+Enter following to make and run program: >
+    :make run 
+< 
+Enter following to make and use clipboard as input to run: >
+    :make runtest
+<
+Above function depend on default makefile. It is allowed to customize new
+makefile path using |g:Cfplay_TemplateMakefile| variable.
+
+
+==============================================================================
+2. Commands                                                       *cfplay-cmd*
+
+==============================================================================
+3. Variables                                                      *cfplay-var*
+
+==============================================================================
+4. Structure                                                   *cfplay-struct*
+
 
  vim:tw=78:ts=8:ft=help:norl:
