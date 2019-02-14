@@ -4,17 +4,17 @@
 " email: lifeich0@gmail.com 
 
 
-function! cdplgnd#text#FindPrintPaths() abort
-    let l:paths = cdplgnd#new#FindPath(cdplgnd#config#Current())
+function! cfplay#text#FindPrintPaths() abort
+    let l:paths = cfplay#new#FindPath(cfplay#config#Current())
     return [l:paths[1], l:paths[2], l:paths[0]]
 endfunction
 
-function! cdplgnd#text#GetText() abort
-    if ! cdplgnd#config#IsWorking() 
+function! cfplay#text#GetText() abort
+    if ! cfplay#config#IsWorking() 
         return [""]
     endif
 
-    let l:paths = cdplgnd#text#FindPrintPaths()
+    let l:paths = cfplay#text#FindPrintPaths()
     let l:text = []
     for l:fil in l:paths
         let l:text += readfile(l:fil)
@@ -37,11 +37,11 @@ function! cdplgnd#text#GetText() abort
     return l:output
 endfunction
 
-function! cdplgnd#text#BrowseText() abort
-    if cdplgnd#config#IsWorking()
+function! cfplay#text#BrowseText() abort
+    if cfplay#config#IsWorking()
         tabnew __Print__
         setlocal buftype=nofile
-        call append(0, cdplgnd#text#GetText())
+        call append(0, cfplay#text#GetText())
         setlocal readonly
         setlocal filetype=cpp
         setlocal nomodifiable
@@ -49,7 +49,7 @@ function! cdplgnd#text#BrowseText() abort
         nnoremap <script> <silent> <buffer> q :q<cr>:echo "quited"<cr>
         nnoremap <script> <silent> <buffer> h
                     \ :echo "'q' for quit, 'y' for yankall"<cr>
-        let l:ykey = cdplgnd#config#YankKey()
+        let l:ykey = cfplay#config#YankKey()
         execute "nnoremap <script> <silent> <buffer> y " . l:ykey
     else
         echom "Currently NOT at ANY problem."

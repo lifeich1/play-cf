@@ -6,30 +6,30 @@
 let s:cur_file = expand("<sfile>")
 
 " Relate to directory tree structure --- {{{
-function! cdplgnd#new#GetDirectory(code) abort
+function! cfplay#new#GetDirectory(code) abort
     return "./src/" . a:code . "/"
 endfunction
 
-function! cdplgnd#new#GetPath(code, name) abort
-    let l:path = cdplgnd#new#GetDirectory(a:code)
+function! cfplay#new#GetPath(code, name) abort
+    let l:path = cfplay#new#GetDirectory(a:code)
     return [l:path . "_io.cc", l:path . "type.h", l:path . a:name . ".cpp"]
 endfunction
 
-function!cdplgnd#new#FindPath(code) abort
-    let l:paths = cdplgnd#new#GetPath(a:code, "*")
+function!cfplay#new#FindPath(code) abort
+    let l:paths = cfplay#new#GetPath(a:code, "*")
     let l:paths[-1] = glob(l:paths[-1], 0, 1)[0]
     return l:paths
 endfunction
 " }}}
 
-function! cdplgnd#new#New(code, name) abort
+function! cfplay#new#New(code, name) abort
 " create new problem --- {{{
     " filenames and symbols ---- {{{
     let l:root_dir = fnamemodify(s:cur_file, ':h:h:h')
     let l:template = l:root_dir . "/templates/"
-    let l:qio = l:template . cdplgnd#config#TemplateIOFile()
-    let l:qyp = l:template . cdplgnd#config#TemplateTypeHeader()
-    let l:qal = l:template . cdplgnd#config#TemplateAlgoFile()
+    let l:qio = l:template . cfplay#config#TemplateIOFile()
+    let l:qyp = l:template . cfplay#config#TemplateTypeHeader()
+    let l:qal = l:template . cfplay#config#TemplateAlgoFile()
     let l:ins = [l:qio, l:qyp, l:qal]
 
     let l:tbase = "_" . a:code . "_" . a:name
@@ -39,7 +39,7 @@ function! cdplgnd#new#New(code, name) abort
     let l:tfunc = a:name . "_" . a:code
     let l:tvars = ["tbase", "tmacro", "tin", "tout", "tfunc"]
 
-    let l:dst = cdplgnd#new#GetPath(a:code, a:name)
+    let l:dst = cfplay#new#GetPath(a:code, a:name)
     " }}}
 
     " auto fill templates ---- {{{
@@ -57,14 +57,14 @@ function! cdplgnd#new#New(code, name) abort
     endfor
     " }}}
 
-    call cdplgnd#new#Edit(a:code)
+    call cfplay#new#Edit(a:code)
 endfunction
 " }}}
 
-function! cdplgnd#new#Rename(code, name) abort
+function! cfplay#new#Rename(code, name) abort
 " rename problem's algo --- {{{
     " prepare symbols ---- {{{
-    let l:t_path = cdplgnd#new#FindPath(a:code)
+    let l:t_path = cfplay#new#FindPath(a:code)
     let l:fio = l:t_path[0]
     let l:fty = l:t_path[1]
     let l:alg = l:t_path[2]
@@ -100,15 +100,15 @@ function! cdplgnd#new#Rename(code, name) abort
     endfor
     " }}}
 
-    let l:path = cdplgnd#new#GetDirectory(a:code)
+    let l:path = cfplay#new#GetDirectory(a:code)
     call rename(l:alg, l:path . a:name . ".cpp")
 
-    call cdplgnd#new#Edit(a:code)
+    call cfplay#new#Edit(a:code)
 endfunction
 " }}}
 
 
-function! cdplgnd#new#NewOrRename() abort
+function! cfplay#new#NewOrRename() abort
 " try create new files or rename old files --- {{{
     let l:code = input("input problem code: ")
     if match(l:code, '^\w\+$') !=# 0
@@ -124,27 +124,27 @@ function! cdplgnd#new#NewOrRename() abort
         echom "Invalid name"
         return
     endif
-    call cdplgnd#new#Clear()
+    call cfplay#new#Clear()
     let l:path = './src/' . l:code
     if isdirectory(l:path)
-        call cdplgnd#new#Rename(l:code, l:name)
+        call cfplay#new#Rename(l:code, l:name)
     else
         call mkdir(l:path, "p")
-        call cdplgnd#new#New(l:code, l:name)
+        call cfplay#new#New(l:code, l:name)
     endif
 endfunction
 " }}}
 
-function! cdplgnd#new#Edit(code) abort
+function! cfplay#new#Edit(code) abort
 " open editing windows --- {{{
-    let l:path = cdplgnd#new#GetDirectory(a:code)
+    let l:path = cfplay#new#GetDirectory(a:code)
     if !isdirectory(l:path)
         echo " "
         echom "File not found!"
         return
     endif
-    let l:layout = cdplgnd#config#EditLayout()
-    let l:t_path = cdplgnd#new#FindPath(a:code)
+    let l:layout = cfplay#config#EditLayout()
+    let l:t_path = cfplay#new#FindPath(a:code)
     let l:fio = l:t_path[0]
     let l:fty = l:t_path[1]
     let l:alg = l:t_path[2]
@@ -160,13 +160,13 @@ function! cdplgnd#new#Edit(code) abort
         execute "topleft vsplit " . l:alg
         execute "1wincmd w"
     endif
-    call cdplgnd#config#SetCurr(a:code)
+    call cfplay#config#SetCurr(a:code)
 endfunction
 " }}}
 
-function! cdplgnd#new#TryEdit() abort
+function! cfplay#new#TryEdit() abort
 " try edit --- {{{
-    let l:default_code = cdplgnd#config#Current()
+    let l:default_code = cfplay#config#Current()
     if l:default_code ==# "#"
         let l:code = input("input problem code: ")
     else
@@ -176,12 +176,12 @@ function! cdplgnd#new#TryEdit() abort
             let l:code = l:default_code
         endif
     endif
-    call cdplgnd#new#Clear()
-    call cdplgnd#new#Edit(l:code)
+    call cfplay#new#Clear()
+    call cfplay#new#Edit(l:code)
 endfunction
 " }}}
 
-function! cdplgnd#new#Clear() abort
+function! cfplay#new#Clear() abort
 " try close buffers --- {{{
     execute '%bdelete'
 endfunction
