@@ -12,6 +12,7 @@ Contents                                            *cfplay* *cfplay-contents*
         2. Commands ........................... |cfplay-cmd|
         3. Variables .......................... |cfplay-var|
         4. Structure .......................... |cfplay-struct|
+
 ==============================================================================
 1. Intro                                                        *cfplay-intro*
 
@@ -19,10 +20,10 @@ Cfplay is a personal coding tool for arena.
 
 
 First, begin with low-level function. Create or rename exists coding problem,
-use command |CfplayNewOrRenProb|. Open a problem using command |CfplayEdit|.
-Clear buffers (all saved) using command |CfplayClear|, but maybe enter `:%bd!`
-to force clear all buffers. When extracting one single synthesis file, enter
-command |CfplayPreview|, which open a tab with output text.
+use command |:CfplayNewOrRenProb|. Open a problem using command |:CfplayEdit|.
+Clear buffers (all saved) using command |:CfplayClear|, but maybe enter
+`:%bd!` to force clear all buffers. When extracting one single synthesis file,
+enter command |:CfplayPreview|, which open a tab with output text.
 
 In creating problem, |cfplay| use 3 template files. It is able to customize
 using variables |g:Cfplay_TemplateIOFile|, |g:Cfplay_TemplateTypeHeader|,
@@ -36,22 +37,54 @@ to show help message, 'q' for quit, 'y' for yank all content. Assign raw yank
 operation sequence to |g:Cfplay_YankKey| for fix yank action in different os.
 
 
-In higher level, with more function available, using |CfplayOn| to turn on
-full environment, |CfplayOff| to turn off, |CfplayToggle| to toggle.
+In higher level, with more function available, using |:CfplayOn| to turn on
+full environment, |:CfplayOff| to turn off, |:CfplayToggle| to toggle.
 
-When environment setup, 'makeprg' is set. Enter `:make` compile only.
-Enter following to make and run program: >
-    :make run 
-< 
-Enter following to make and use clipboard as input to run: >
-    :make runtest
-<
-Above function depend on default makefile. It is allowed to customize new
-makefile path using |g:Cfplay_TemplateMakefile| variable.
+When environment setup, 'makeprg' is set. Enter `:make` compile only.  Enter
+following to make and run program: > :make run < Enter following to make and
+use clipboard as input to run: > :make runtest < Above function depend on
+default makefile. It is allowed to customize new makefile path using
+|g:Cfplay_TemplateMakefile| variable.
 
 
 ==============================================================================
 2. Commands                                                       *cfplay-cmd*
+
+                                                         *:CfplayNewOrRenProb*
+:CfplayNewOrRenProb         Create new problem solution or rename an existing
+                            problem solution interactively.
+                            If type an existing problem code in first step,
+                            the solution will be renamed.
+                            The command will open the solution eventually when
+                            operation succeed.
+
+                                                                 *:CfplayEdit*
+:CfplayEdit     Open solution interactively.
+                One can specify editing layout using |g:Cfplay_EditLayout|.
+
+                                                                *:CfplayClear*
+:CfplayClear        Clear all buffer when no dirty buffer exists. Equal to >
+                    :%bd
+<
+
+                                                              *:CfplayPreview*
+:CfplayPreview      Display synthesis code. It is helpful when submiting.
+
+
+                                                                   *:CfplayOn*
+:CfplayOn       Enable full-support environment.
+                Enable make support.
+                Also create mappings, <leader>pr for |:CfplayNewOrRenProb|,
+                <leader>pe for |:CfplayEdit|, <leader>pc for |:CfplayClear|,
+                <leader>pp for |:CfplayPreview|.
+	*Todo	user-specify mapping
+
+                                                                  *:CfplayOff*
+:CfplayOff      Disable arena environment.
+                Also unmap mappings |:CfplayOn| created.
+
+                                                               *:CfplayToggle*
+:CfplayToggle       Toggle arena environment.
 
 ==============================================================================
 3. Variables                                                      *cfplay-var*
