@@ -1,6 +1,6 @@
 # play-cf
 
-Fool's CF playground
+Fool's CF playground tools.
 
 <a href="http://www.wtfpl.net/"><img
        src="http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png"
